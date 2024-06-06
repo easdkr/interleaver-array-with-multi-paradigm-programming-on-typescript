@@ -1,6 +1,6 @@
 import { identity, pipe } from "fp-ts/function";
 import { flatten, mapWithIndex, filterMap } from "fp-ts/Array";
-import { none, some, type None, type Some } from "fp-ts/Option";
+import { none, some, type Option } from "fp-ts/Option";
 import { takeFrom } from "../functional";
 import { PositionPointer } from "./position";
 
@@ -61,13 +61,14 @@ export class Interleaver<T> {
       flatten
     );
 
+    // 모든 배열의 방출이 끝나면 다음 위치로 이동
     this.pointer.next();
   }
 
   /**
    * 현재 위치에 따라 idx번째 배열에서 다음 요소들을 해당 배열의 pattern 크기만큼 가져옵니다.
    */
-  private getNextElement = (idx: number, item: T[]): None | Some<T[]> =>
+  private getNextElement = (idx: number, item: T[]): Option<T[]> =>
     this.pointer.isEnd(idx)
       ? none
       : some(
