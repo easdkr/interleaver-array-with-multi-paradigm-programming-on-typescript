@@ -42,11 +42,10 @@ export class PositionPointer {
 
   /**
    * pattern에 따라 위치 포인터를 다음 위치로 이동합니다.
+   * 배열의 끝에 도달하면 마지막 위치로 설정합니다.
    */
   public next = () =>
     (this.#positions = this.#positions.map((pos, idx) =>
-      pos + this.pattern[idx] >= this.lengths[idx]
-        ? this.lengths[idx]
-        : (pos += this.pattern[idx])
+      this.isEnd(idx) ? this.lengths[idx] : (pos += this.pattern[idx])
     ));
 }
