@@ -66,14 +66,14 @@ export class Interleaver<T> {
   /**
    * 현재 위치에 따라 idx번째 배열에서 다음 요소들을 해당 배열의 pattern 크기만큼 가져옵니다.
    */
-  private getNextElement = (idx: number): None | Some<T[]> =>
+  private getNextElement = (idx: number, item: T[]): None | Some<T[]> =>
     this.pointer.isEnd(idx)
       ? none
       : some(
           takeFrom(
             this.pointer.getPosition(idx),
             this.pointer.getPattern(idx),
-            this.arrays[idx]
+            item
           )
         );
 }
