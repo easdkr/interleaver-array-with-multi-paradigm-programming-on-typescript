@@ -25,7 +25,7 @@ const arrays = [
 
 const pattern = [2, 1, 2];
 
-const result = Interleaver.of(arrays, pattern);
+const result = Interleaver.of(arrays, pattern).interleave();
 
 console.log(result); // [1,2,3,4,5,6,7,8,9,10]
 ```
