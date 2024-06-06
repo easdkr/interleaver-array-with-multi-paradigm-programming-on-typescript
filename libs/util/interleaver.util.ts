@@ -26,42 +26,45 @@ export class Interleaver<T> {
    */
   public interleave(options?: { allowDuplicates: boolean }): T[] {
     return pipe(
-      this.interleaveRecursive(),
-      Array.from,
+      this,
+      Array.from<T>,
       options?.allowDuplicates ? identity : (arr) => Array.from(new Set(arr))
-    ) as T[]; // Add type assertion to specify the return type as T[]
+    );
   }
 
   /**
-   * 재귀적으로 인터리빙된 배열을 방출하는 제너레이터입니다.
-   * 각 반복마다 현재 위치에 따라 교차된 요소를 방출하고, 위치를 업데이트합니다.
+   * `Iterable` 인터페이스 구현.
+   * 인터리빙된 요소들을 반환하는 제너레이터를 제공합니다.
    */
-  private *interleaveRecursive(): Generator<T, void, undefined> {
-    const nextElements = this.getNextElements();
-    // 다음 요소가 없으면 종료
-    if (nextElements.length === 0) {
-      return;
+  public *[Symbol.iterator](): Iterator<T> {
+    while (true) {
+      const nextElements = this.getNextElements();
+
+      // 다음 요소가 없으면 종료
+      if (nextElements.length === 0) {
+        break;
+      }
+
+      // 이번 반복에서 만든 요소를 방출
+      yield* nextElements;
     }
-
-    this.pointer.next();
-
-    // 이번 반복에서 만든 요소를 방출
-    yield* nextElements;
-
-    // 재귀적으로 다음 요소들을 방출
-    yield* this.interleaveRecursive();
   }
 
   /**
-   * 현재 위치에 따라 다음 요소들을 가져옵니다.
+   * 현재 위치에 따라 다음 요소들을 배열로 수집합니다.
    */
-  private getNextElements = (): T[] =>
-    pipe(
+  private getNextElements(): T[] {
+    const nextElements = pipe(
       this.arrays,
       mapWithIndex(this.getNextElement),
       filterMap(identity),
       flatten
     );
+
+    this.pointer.next();
+
+    return nextElements;
+  }
 
   /**
    * 현재 위치에 따라 idx번째 배열에서 다음 요소들을 해당 배열의 pattern 크기만큼 가져옵니다.
