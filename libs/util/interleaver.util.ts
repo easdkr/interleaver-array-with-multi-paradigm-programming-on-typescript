@@ -17,7 +17,7 @@ export class Interleaver<T> {
     );
   }
 
-  public static of<T>(pattern: number[], arrays: T[][]): Interleaver<any> {
+  public static of<T>(pattern: number[], arrays: T[][]): Interleaver<T> {
     return new Interleaver(pattern, arrays);
   }
 
