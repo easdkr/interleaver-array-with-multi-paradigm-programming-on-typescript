@@ -35,19 +35,20 @@ export class Interleaver<T> {
    * 인터리빙된 요소들을 반환하는 제너레이터를 제공합니다.
    */
   public *[Symbol.iterator](): Iterator<T> {
-    while (true) {
-      const nextElements = this.getNextElements();
-      // 다음 요소가 없으면 종료
-      if (nextElements.length === 0) {
-        break;
-      }
-
-      // 이번 반복에서 만든 요소를 방출
-      yield* nextElements;
-
-      // 모든 배열의 방출이 끝나면 다음 위치로 이동
-      this.pointer.next();
+    const nextElements = this.getNextElements();
+    // 다음 요소가 없으면 종료
+    if (nextElements.length === 0) {
+      return;
     }
+
+    // 이번 반복에서 만든 요소를 방출
+    yield* nextElements;
+
+    // 모든 배열의 방출이 끝나면 다음 위치로 이동
+    this.pointer.next();
+
+    // 재귀적으로 다음 요소를 찾습니다.
+    yield* this;
   }
 
   /**
