@@ -70,8 +70,8 @@ export class Interleaver<T> {
       ? none
       : some(
           takeFrom(
-            this.pointer.getPosition(idx),
-            this.pointer.getPattern(idx),
+            this.pointer.getLeft(idx),
+            this.pointer.getWindowSize(idx),
             item
           )
         );

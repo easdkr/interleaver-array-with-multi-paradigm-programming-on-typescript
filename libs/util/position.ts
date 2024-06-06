@@ -2,43 +2,52 @@ export class PositionPointer {
   #positions: number[] = [];
 
   private constructor(
-    private readonly lengths: number[],
-    private readonly pattern: number[]
+    private readonly targetLengths: number[],
+    private readonly windowSize: number[]
   ) {
     this.validatePattern();
     this.initializePositions();
   }
 
   private validatePattern = () => {
-    if (this.pattern.length !== this.lengths.length) {
+    if (this.windowSize.length !== this.targetLengths.length) {
       throw new Error("패턴과 배열의 길이가 일치하지 않습니다.");
     }
-    if (this.pattern.some((p) => p < 1)) {
+    if (this.windowSize.some((p) => p < 1)) {
       throw new Error("패턴은 1 이상의 값을 가져야 합니다.");
     }
   };
 
   private initializePositions = () =>
-    (this.#positions = this.lengths.map(() => 0));
+    (this.#positions = this.targetLengths.map(() => 0));
 
   public static of = (lengths: number[], pattern: number[]): PositionPointer =>
     new PositionPointer(lengths, pattern);
 
   /**
-   * {index} 위치 포인터를 반환합니다.
+   * {index} 위치의 윈도우 시작 위치를 반환합니다.
    */
-  public getPosition = (index: number) => this.#positions[index];
+  public getLeft = (index: number) => this.#positions[index];
 
   /**
-   * {index} 위치의 패턴을 반환합니다.
+   * {index} 위치의 윈도우 끝 위치를 반환합니다.
    */
-  public getPattern = (index: number) => this.pattern[index];
+  public getRight = (index: number) =>
+    Math.min(
+      this.#positions[index] + this.windowSize[index],
+      this.targetLengths[index]
+    );
+
+  /**
+   * {index} 위치의 윈도우 크기를 반환합니다.
+   */
+  public getWindowSize = (index: number) => this.windowSize[index];
 
   /**
    * {index} 위치 포인터가 배열의 끝에 도달했는지 여부를 반환합니다.
    */
   public isEnd = (index: number) =>
-    this.#positions[index] >= this.lengths[index];
+    this.#positions[index] >= this.targetLengths[index];
 
   /**
    * pattern에 따라 위치 포인터를 다음 위치로 이동합니다.
@@ -46,6 +55,6 @@ export class PositionPointer {
    */
   public next = () =>
     (this.#positions = this.#positions.map((pos, idx) =>
-      this.isEnd(idx) ? this.lengths[idx] : (pos += this.pattern[idx])
+      this.isEnd(idx) ? this.targetLengths[idx] : (pos += this.windowSize[idx])
     ));
 }
