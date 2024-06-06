@@ -43,8 +43,12 @@ export class Interleaver<T> {
   /**
    * 주어진 패턴에 따라 배열을 교차하여 하나의 배열로 만듭니다.
    */
-  public interleave(): T[] {
-    return [...this.interleaveRecursive()];
+  public interleave(options?: { allowDuplicates: boolean }): T[] {
+    return pipe(
+      this.interleaveRecursive(),
+      Array.from,
+      options?.allowDuplicates ? identity : (arr) => Array.from(new Set(arr))
+    ) as T[]; // Add type assertion to specify the return type as T[]
   }
 
   /**
@@ -53,6 +57,7 @@ export class Interleaver<T> {
    */
   private *interleaveRecursive(): Generator<T, void, undefined> {
     const nextElements = this.getNextElements();
+    // 다음 요소가 없으면 종료
     if (nextElements.length === 0) {
       return;
     }

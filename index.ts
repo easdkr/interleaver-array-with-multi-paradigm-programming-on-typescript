@@ -65,4 +65,14 @@ test([
     pattern: [1, 1, 1, 1],
     expected: [1, 3, 4],
   },
+  {
+    description: "Test case 8 (Remove duplicates)",
+    arrays: [
+      [1, 2, 3],
+      [2, 3, 4],
+      [3, 4, 5],
+    ],
+    pattern: [1, 1, 1],
+    expected: [1, 2, 3, 4, 5],
+  },
 ]);
