@@ -36,8 +36,7 @@ export class Interleaver<T> {
    */
   public *[Symbol.iterator](): Iterator<T> {
     while (true) {
-      const nextElements = Array.from(this.getNextElements());
-
+      const nextElements = this.getNextElements();
       // 다음 요소가 없으면 종료
       if (nextElements.length === 0) {
         break;
@@ -45,23 +44,22 @@ export class Interleaver<T> {
 
       // 이번 반복에서 만든 요소를 방출
       yield* nextElements;
+
+      // 모든 배열의 방출이 끝나면 다음 위치로 이동
+      this.pointer.next();
     }
   }
 
   /**
    * 현재 위치에 따라 다음 요소들을 배열로 수집합니다.
    */
-  private *getNextElements() {
-    yield* pipe(
+  private getNextElements = () =>
+    pipe(
       this.arrays,
       mapWithIndex(this.getNextElement),
       filterMap(identity),
       flatten
     );
-
-    // 모든 배열의 방출이 끝나면 다음 위치로 이동
-    this.pointer.next();
-  }
 
   /**
    * 현재 위치에 따라 idx번째 배열에서 다음 요소들을 해당 배열의 pattern 크기만큼 가져옵니다.
