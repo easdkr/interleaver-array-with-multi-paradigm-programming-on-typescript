@@ -8,10 +8,10 @@ export class Interleaver<T> {
   /**
    * 각 배열의 현재 위치를 저장합니다.
    */
-  private positions!: PositionPointer;
+  private pointer!: PositionPointer;
 
   private constructor(pattern: number[], private readonly arrays: T[][]) {
-    this.positions = PositionPointer.of(
+    this.pointer = PositionPointer.of(
       arrays.map((a) => a.length),
       pattern
     );
@@ -43,7 +43,7 @@ export class Interleaver<T> {
       return;
     }
 
-    this.positions.update(this.arrays);
+    this.pointer.next();
 
     // 이번 반복에서 만든 요소를 방출
     yield* nextElements;
@@ -67,12 +67,12 @@ export class Interleaver<T> {
    * 현재 위치에 따라 idx번째 배열에서 다음 요소들을 해당 배열의 pattern 크기만큼 가져옵니다.
    */
   private getNextElement = (idx: number): None | Some<T[]> =>
-    this.positions.isEnd(idx)
+    this.pointer.isEnd(idx)
       ? none
       : some(
           takeFrom(
-            this.positions.getPosition(idx),
-            this.positions.getPattern(idx),
+            this.pointer.getPosition(idx),
+            this.pointer.getPattern(idx),
             this.arrays[idx]
           )
         );

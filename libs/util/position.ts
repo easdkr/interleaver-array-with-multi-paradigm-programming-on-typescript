@@ -33,10 +33,10 @@ export class PositionPointer {
     return this.#positions[index] >= this.lengths[index];
   }
 
-  public update<T>(arrays: T[][]): void {
+  public next(): void {
     this.#positions = this.#positions.map((pos, idx) =>
-      pos + this.pattern[idx] >= arrays[idx].length
-        ? arrays[idx].length
+      pos + this.pattern[idx] >= this.lengths[idx]
+        ? this.lengths[idx]
         : (pos += this.pattern[idx])
     );
   }
