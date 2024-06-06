@@ -38,7 +38,7 @@ export class Interleaver<T> {
    */
   public *[Symbol.iterator](): Iterator<T> {
     while (true) {
-      const nextElements = this.getNextElements();
+      const nextElements = Array.from(this.getNextElements());
 
       // 다음 요소가 없으면 종료
       if (nextElements.length === 0) {
@@ -53,8 +53,8 @@ export class Interleaver<T> {
   /**
    * 현재 위치에 따라 다음 요소들을 배열로 수집합니다.
    */
-  private getNextElements(): T[] {
-    const nextElements = pipe(
+  private *getNextElements() {
+    yield* pipe(
       this.arrays,
       mapWithIndex(this.getNextElement),
       filterMap(identity),
@@ -62,8 +62,6 @@ export class Interleaver<T> {
     );
 
     this.pointer.next();
-
-    return nextElements;
   }
 
   /**
