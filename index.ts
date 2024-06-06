@@ -76,3 +76,17 @@ test([
     expected: [1, 2, 3, 4, 5],
   },
 ]);
+
+// const interleave = Interleaver.of(
+//   [2, 2],
+//   [
+//     ["Hello", "나는"],
+//     ["world", "개발자"],
+//   ]
+// )[Symbol.iterator]();
+
+// console.log(interleave.next());
+// console.log(interleave.next());
+// console.log(interleave.next());
+// console.log(interleave.next());
+// console.log(interleave.next());
