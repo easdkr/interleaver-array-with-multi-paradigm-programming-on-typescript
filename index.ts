@@ -48,25 +48,25 @@ test([
     expected: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   },
   {
-    description: "Test case 5 (All Empty array)",
+    description: "Test case 4 (All Empty array)",
     arrays: [[], [], []],
     pattern: [1, 2, 3],
     expected: [],
   },
   {
-    description: "Test case 6 (Single element)",
+    description: "Test case 5 (Single element)",
     arrays: [[1], [2], [3], [4]],
     pattern: [1, 1, 1, 1],
     expected: [1, 2, 3, 4],
   },
   {
-    description: "Test case 7 (Single element with empty array)",
+    description: "Test case 6 (Single element with empty array)",
     arrays: [[1], [], [3], [4]],
     pattern: [1, 1, 1, 1],
     expected: [1, 3, 4],
   },
   {
-    description: "Test case 8 (Remove duplicates)",
+    description: "Test case 7 (Remove duplicates)",
     arrays: [
       [1, 2, 3],
       [2, 3, 4],
