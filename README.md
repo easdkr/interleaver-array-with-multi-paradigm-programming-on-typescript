@@ -1,6 +1,6 @@
 # Interleaver with number pattern (with multi paradigm programming on typescript)
 
-## 멀티 패러다임 프로그래밍으로 주어진 배열 그룹 (중첩 배열) 을 지정된 개수 패턴 배열에 따라 섞어서 하나의 배열로 만드는 방법
+> [블로그](https://velog.io/@easdkr/%EB%B3%B5%EC%9E%A1%ED%95%9C-%EC%A0%95%EB%A0%AC-grouping%EA%B3%BC-interleaving-with-%EB%A9%80%ED%8B%B0%ED%8C%A8%EB%9F%AC%EB%8B%A4%EC%9E%84-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0) 예제 프로젝트 입니다.
 
 To install dependencies:
 
