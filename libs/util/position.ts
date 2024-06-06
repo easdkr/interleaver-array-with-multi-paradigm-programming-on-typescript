@@ -21,9 +21,8 @@ export class PositionPointer {
   private initializePositions = () =>
     (this.#positions = this.lengths.map(() => 0));
 
-  public static of(lengths: number[], pattern: number[]): PositionPointer {
-    return new PositionPointer(lengths, pattern);
-  }
+  public static of = (lengths: number[], pattern: number[]): PositionPointer =>
+    new PositionPointer(lengths, pattern);
 
   public getPosition = (index: number) => this.#positions[index];
 

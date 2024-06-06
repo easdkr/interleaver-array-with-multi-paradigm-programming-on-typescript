@@ -17,9 +17,8 @@ export class Interleaver<T> {
     );
   }
 
-  public static of<T>(pattern: number[], arrays: T[][]): Interleaver<T> {
-    return new Interleaver(pattern, arrays);
-  }
+  public static of = <T>(pattern: number[], arrays: T[][]): Interleaver<T> =>
+    new Interleaver(pattern, arrays);
 
   /**
    * 주어진 패턴에 따라 배열을 교차하여 하나의 배열로 만듭니다.
