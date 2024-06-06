@@ -77,16 +77,9 @@ test([
   },
 ]);
 
-// const interleave = Interleaver.of(
-//   [2, 2],
-//   [
-//     ["Hello", "나는"],
-//     ["world", "개발자"],
-//   ]
-// )[Symbol.iterator]();
+const interleave = Interleaver.of(
+  [1, 1, 1, 1, 1],
+  [["Hello", "hi"], [" ", " "], ["world", "there"], ["!", "?"], ["\n"]]
+);
 
-// console.log(interleave.next());
-// console.log(interleave.next());
-// console.log(interleave.next());
-// console.log(interleave.next());
-// console.log(interleave.next());
+console.log([...interleave].join(""));
