@@ -24,13 +24,12 @@ export class Interleaver<T> {
   /**
    * 주어진 패턴에 따라 배열을 교차하여 하나의 배열로 만듭니다.
    */
-  public interleave(options?: { allowDuplicates: boolean }): T[] {
-    return pipe(
+  public interleave = (options?: { allowDuplicates: boolean }): T[] =>
+    pipe(
       this,
       Array.from<T>,
       options?.allowDuplicates ? identity : (arr) => Array.from(new Set(arr))
     );
-  }
 
   /**
    * `Iterable` 인터페이스 구현.
