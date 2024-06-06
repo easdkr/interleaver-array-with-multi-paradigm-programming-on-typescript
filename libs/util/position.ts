@@ -25,23 +25,17 @@ export class PositionPointer {
     return new PositionPointer(lengths, pattern);
   }
 
-  public getPosition(index: number): number {
-    return this.#positions[index];
-  }
+  public getPosition = (index: number) => this.#positions[index];
 
-  public isEnd(index: number): boolean {
-    return this.#positions[index] >= this.lengths[index];
-  }
+  public getPattern = (index: number) => this.pattern[index];
 
-  public next(): void {
-    this.#positions = this.#positions.map((pos, idx) =>
+  public isEnd = (index: number) =>
+    this.#positions[index] >= this.lengths[index];
+
+  public next = () =>
+    (this.#positions = this.#positions.map((pos, idx) =>
       pos + this.pattern[idx] >= this.lengths[idx]
         ? this.lengths[idx]
         : (pos += this.pattern[idx])
-    );
-  }
-
-  public getPattern(index: number): number {
-    return this.pattern[index];
-  }
+    ));
 }
