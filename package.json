@@ -10,5 +10,8 @@
   },
   "scripts": {
     "start": "bun run index.ts"
+  },
+  "dependencies": {
+    "fp-ts": "^2.16.6"
   }
 }
